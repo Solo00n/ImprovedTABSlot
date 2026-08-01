@@ -28,18 +28,18 @@ jobs:
         run: |
           mkdir -p dist/package/plugins
           cp manifest.json icon.png README.md CHANGELOG.md dist/package/
-          cp bin/Release/Iron.ImprovedTabSlot.dll dist/package/plugins/
+          cp bin/Release/Iron.ImprovedTABSlot_Beltbag.dll dist/package/plugins/
           version=$(grep -oP '"version_number":\s*"\K[^"]+' manifest.json)
-          cd dist/package && zip -r "../ImprovedTABSlot-${version}.zip" .
+          cd dist/package && zip -r "../ImprovedTABSlot_Beltbag-${version}.zip" .
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ImprovedTABSlot
-          path: dist/ImprovedTABSlot-*.zip
+          name: ImprovedTABSlot_Beltbag
+          path: dist/ImprovedTABSlot_Beltbag-*.zip
 
       - name: Attach to GitHub Release (on tag)
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/ImprovedTABSlot-*.zip
+          files: dist/ImprovedTABSlot_Beltbag-*.zip

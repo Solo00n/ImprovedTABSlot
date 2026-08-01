@@ -15,9 +15,9 @@ namespace ImprovedTabSlot
     [BepInPlugin(PLUGIN_GUID, PLUGIN_NAME, PLUGIN_VERSION)]
     public class Plugin : BaseUnityPlugin
     {
-        public const string PLUGIN_GUID = "Iron.ImprovedTabSlot";
-        public const string PLUGIN_NAME = "Improved TAB Slot";
-        public const string PLUGIN_VERSION = "1.2.1";
+        public const string PLUGIN_GUID = "Iron.ImprovedTABSlot_Beltbag";
+        public const string PLUGIN_NAME = "ImprovedTABSlot+Beltbag";
+        public const string PLUGIN_VERSION = "1.3.0";
 
         internal static Plugin Instance { get; private set; }
         internal static ManualLogSource Log { get; private set; }

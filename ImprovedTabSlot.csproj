@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <AssemblyName>Iron.ImprovedTabSlot</AssemblyName>
-    <Product>Improved TAB Slot</Product>
-    <Version>1.2.1</Version>
+    <AssemblyName>Iron.ImprovedTABSlot_Beltbag</AssemblyName>
+    <Product>ImprovedTABSlot+Beltbag</Product>
+    <Version>1.3.0</Version>
     <LangVersion>latest</LangVersion>
     <Nullable>disable</Nullable>
     <RootNamespace>ImprovedTabSlot</RootNamespace>

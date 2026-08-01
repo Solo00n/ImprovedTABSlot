@@ -1,4 +1,6 @@
-# Improved TAB Slot
+# ImprovedTABSlot+Beltbag
+
+**Language / Язык:** [English](#improvedtabslotbeltbag) · [Русский](#russian)
 
 A **client-side** BepInEx mod for Lethal Company (v80+, "The Blooming Update", which
 added the vanilla utility slot). It lets selected items — normally kept out by the
@@ -120,7 +122,7 @@ Requirements: **.NET SDK 6.0+** (`dotnet --version`).
 dotnet build -c Release
 ```
 
-Output: `bin/Release/Iron.ImprovedTabSlot.dll`.
+Output: `bin/Release/Iron.ImprovedTABSlot_Beltbag.dll`.
 
 ### Game references
 
@@ -139,13 +141,13 @@ that block, and fix the path to your Steam install.
 ## Install (manual)
 
 1. Install **BepInEx 5** (BepInExPack for Lethal Company) if you haven't.
-2. Copy `Iron.ImprovedTabSlot.dll` into `Lethal Company/BepInEx/plugins/`.
-3. Launch once to generate `BepInEx/config/Iron.ImprovedTabSlot.cfg`.
+2. Copy `Iron.ImprovedTABSlot_Beltbag.dll` into `Lethal Company/BepInEx/plugins/`.
+3. Launch once to generate `BepInEx/config/Iron.ImprovedTABSlot_Beltbag.cfg`.
 
 On launch you should see this line in `BepInEx/LogOutput.log`:
 
 ```
-[Info : Improved TAB Slot] Utility-slot patch active on PlayerControllerB.FirstEmptyItemSlot.
+[Info : ImprovedTABSlot+Beltbag] Utility-slot patch active on PlayerControllerB.FirstEmptyItemSlot.
 ```
 
 If instead it logs that the method wasn't found or the Prefix didn't attach, the game
@@ -155,7 +157,7 @@ version changed the method — open an issue and it can be re-pointed.
 
 ## Configuration
 
-File: `BepInEx/config/Iron.ImprovedTabSlot.cfg`
+File: `BepInEx/config/Iron.ImprovedTABSlot_Beltbag.cfg`
 
 | Section | Key              | Default | Meaning |
 |---------|------------------|---------|---------|
@@ -189,7 +191,9 @@ File: `BepInEx/config/Iron.ImprovedTabSlot.cfg`
 ```
 ImprovedTabSlot.csproj        # SDK-style build, game refs via NuGet
 nuget.config                  # nuget.org + BepInEx feeds
-manifest.json                 # Thunderstore metadata (add icon.png before packaging)
+manifest.json                 # Thunderstore metadata
+icon.png                      # Thunderstore icon (256x256)
+LICENSE                       # MIT
 src/
   Plugin.cs                   # BaseUnityPlugin entry point, Harmony.PatchAll + verify
   PluginConfig.cs             # BepInEx config bindings
@@ -199,5 +203,99 @@ src/
     BeltBagPatch.cs           # Postfix on BeltBagItem.ItemInteractLeftRight
 ```
 
-> **Packaging for Thunderstore:** add a 256×256 `icon.png` next to `manifest.json`
-> before zipping. It's intentionally omitted here.
+> **Packaging for Thunderstore:** the CI workflow (`.github/workflows/build.yml`) zips
+> `manifest.json`, `icon.png`, `README.md`, `CHANGELOG.md` and `plugins/…dll` on each
+> version tag and attaches the result to a GitHub Release.
+
+---
+
+<a id="russian"></a>
+
+# ImprovedTABSlot+Beltbag — Русское описание
+
+**[⤴ English](#improvedtabslotbeltbag)**
+
+**Клиентский** мод на BepInEx для Lethal Company (v80+, обновление «The Blooming Update»,
+добавившее utility-слот). Позволяет носить в **Tab-слоте** предметы, которые ваниль туда
+не пускает:
+
+- **Лопата** (и её рероллы: знак Stop / Yield)
+- **Патроны** (для дробовика)
+- **Планшет** (Clipboard)
+- **Стикер** (Sticky note)
+- **Ключ**
+- **Дробовик** — *двуручный, см. оговорку ниже*
+- **Кухонный нож**
+- **Манчер** (детёныш cave dweller) — *только Tab-слот, опция, по умолчанию выкл.*
+
+Каждый предмет включается/выключается отдельно в конфиге. Мод также **чинит Belt Bag**,
+чтобы туда влезали эти же предметы (в первую очередь дробовик и нож — ваниль не пускает их
+как «скрап»).
+
+> Мод меняет только то, что **ты** кладёшь в **свой** слот. Безопасен в лобби, где у других
+> игроков мода нет.
+
+## Как это работает
+
+Ванильный «чёрный список» utility-слота живёт в одном методе —
+`PlayerControllerB.FirstEmptyItemSlot`. Он кладёт предмет в слот `50` (это и есть
+utility/Tab-слот) только если предмет **не скрап**, **не двуручный** и без флага
+`disallowUtilitySlot`. Мод добавляет **Prefix**, который для включённых предметов возвращает
+`50`, обходя все три проверки (только когда слот пуст). Клавиша **Tab**
+(`UseUtilitySlot_performed`) предмет не перепроверяет — она лишь переключает активный слот,
+поэтому заполнить слот достаточно: предмет автоматически уходит в слот при подборе (если слот
+пуст) и меняется местами с активным по Tab.
+
+### ⚠️ Про дробовик (двуручный)
+
+Дробовик двуручный: положить в слот и переключиться на него по Tab можно, но ванильная
+блокировка смены слота для двуручных предметов остаётся — держа дробовик в руках,
+переключиться назад можно только выбросив его. Это поведение самой игры. Отключается
+`[Items] Shotgun`.
+
+## Belt Bag
+
+Ваниль в belt bag **не кладёт скрап** (поэтому дробовик и нож — оба скрап — не влезают) и
+**Манчера** (по itemId). Мод до-кладывает включённые в `[Items]` предметы через **Postfix**
+на `BeltBagItem.ItemInteractLeftRight`: ваниль отрабатывает как есть, затем мод повторяет тот
+же raycast и добавляет предмет штатным `TryAddObjectToBag`.
+
+**Манчер в belt bag не кладётся никогда** — это живой AI: сумка не запускает путь захвата,
+который вырубает существу навигацию, поэтому «в сумке» его тело продолжало бы бегать. Ваниль
+блокирует его по той же причине. Манчер поддержан **только в Tab-слоте**, где срабатывает
+настоящий захват (`EquipItem` → существо замирает).
+
+## Установка
+
+1. Поставь **BepInEx 5** (BepInExPack для Lethal Company).
+2. Скопируй `Iron.ImprovedTABSlot_Beltbag.dll` в `Lethal Company/BepInEx/plugins/`.
+3. Запусти игру один раз — создастся конфиг `BepInEx/config/Iron.ImprovedTABSlot_Beltbag.cfg`.
+
+## Конфигурация
+
+| Секция | Ключ | По умолч. | Значение |
+|--------|------|-----------|----------|
+| General | `Enabled` | `true` | Главный выключатель. |
+| Items | `Shovel` | `true` | Лопата (+ знаки Stop/Yield). |
+| Items | `Ammo` | `true` | Патроны для дробовика. |
+| Items | `Clipboard` | `true` | Планшет. |
+| Items | `StickyNote` | `true` | Стикер. |
+| Items | `Key` | `true` | Ключи. |
+| Items | `Shotgun` | `true` | Дробовик (двуручный, см. оговорку). |
+| Items | `Knife` | `true` | Кухонный нож. |
+| Items | `Maneater` | `false` | Манчер — **только Tab-слот** (в сумку никогда; выкл. by design). |
+| BeltBag | `Enabled` | `true` | Класть включённые `[Items]` ещё и в belt bag. |
+| Debug | `VerboseLogging` | `false` | Логировать каждый добавленный предмет. |
+
+## Совместимость
+
+- Не патчит **ReservedItemSlotCore / ReservedUtilitySlot** — трогает только ванильные методы,
+  так что с их слотами не конфликтует. Если параллельно запущен мод, мостящий ванильный
+  utility-слот с ReservedItemSlotCore, следи за возможным конфликтом бинда Tab; лучше держать
+  один менеджер utility-слота.
+- Настройки не сетевые: каждый клиент управляет своим списком.
+
+## Сборка (для разработчиков)
+
+`dotnet build -c Release` → `bin/Release/Iron.ImprovedTABSlot_Beltbag.dll`. Версию пакета
+`LethalCompany.GameLibs.Steam` в `ImprovedTabSlot.csproj` подгони под свою сборку игры.

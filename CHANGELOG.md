@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.0
+- Renamed to **ImprovedTABSlot+Beltbag** (Thunderstore package `ImprovedTABSlot_Beltbag`,
+  assembly/plugin `Iron.ImprovedTABSlot_Beltbag`) to reflect that it covers both the utility
+  slot and the belt bag. NOTE: the config file is now `Iron.ImprovedTABSlot_Beltbag.cfg`.
+- Added a Russian description to the README (rendered on the mod page).
+
 ## 1.2.1
 - Fix: the Maneater is no longer added to the belt bag. It's a live AI creature and the belt
   bag never runs its grab/equip path, so a bagged Maneater kept running its hidden body and

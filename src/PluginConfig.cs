@@ -4,7 +4,7 @@ namespace ImprovedTabSlot
 {
     /// <summary>
     /// All BepInEx config bindings. Written to
-    /// BepInEx/config/Iron.ImprovedTabSlot.cfg on first launch.
+    /// BepInEx/config/Iron.ImprovedTABSlot_Beltbag.cfg on first launch.
     /// </summary>
     public class PluginConfig
     {
