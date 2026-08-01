@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>Iron.ImprovedTabSlot</AssemblyName>
+    <Product>Improved TAB Slot</Product>
+    <Version>1.2.1</Version>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <RootNamespace>ImprovedTabSlot</RootNamespace>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- BepInEx 5 runtime + HarmonyX (0Harmony ships inside BepInEx.Core). -->
+    <PackageReference Include="BepInEx.Core" Version="5.*" />
+
+    <!-- Unity engine assemblies (compile-time only, never copied into the build).
+         Must match the Unity version GameLibs targets (2022.3.62 for the current build). -->
+    <PackageReference Include="UnityEngine.Modules" Version="2022.3.62" IncludeAssets="compile" PrivateAssets="all" />
+
+    <!-- Stripped Lethal Company game assemblies (Assembly-CSharp, etc.). Compile-time only.
+         IMPORTANT: match this to your installed game build. "81.0.0-*" floats to the newest
+         81.x prerelease (the current build). For a strictly-v80 install use "80.0.0-*".
+         The mod only touches long-stable public members, so building against 81 still runs on v80.
+         Browse versions: https://www.nuget.org/packages/LethalCompany.GameLibs.Steam -->
+    <PackageReference Include="LethalCompany.GameLibs.Steam" Version="81.0.0-*" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- =========================================================================
+       ALTERNATIVE to the LethalCompany.GameLibs.Steam NuGet package above:
+       reference your locally installed Assembly-CSharp.dll directly. Delete the
+       GameLibs PackageReference above and uncomment the block below, fixing the
+       HintPath to your Steam install. Private=false => not copied to output.
+       =========================================================================
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+  -->
+
+</Project>
