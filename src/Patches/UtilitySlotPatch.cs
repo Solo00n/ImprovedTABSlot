@@ -1,6 +1,7 @@
 using System;
 using GameNetcodeStuff;   // PlayerControllerB
 using HarmonyLib;
+using ImprovedTabSlot.Networking;
 
 namespace ImprovedTabSlot
 {
@@ -39,6 +40,7 @@ namespace ImprovedTabSlot
         {
             try
             {
+                if (!HostSync.Enabled) return true;                  // host doesn't have the mod -> vanilla
                 if (!Plugin.Cfg.Enabled.Value) return true;          // run original
                 if (attemptingGrab == null) return true;             // null probe (Tab-out path)
                 if (__instance.ItemOnlySlot != null) return true;    // utility slot occupied -> normal logic

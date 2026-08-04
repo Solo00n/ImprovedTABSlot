@@ -8,16 +8,20 @@ using HarmonyLib;
 namespace ImprovedTabSlot
 {
     /// <summary>
-    /// Main BepInEx plugin entry point. Client-side only: it only changes what YOUR
-    /// client lets into YOUR own utility slot, so it is safe in lobbies where other
-    /// players do not have the mod.
+    /// Main BepInEx plugin entry point.
+    ///
+    /// Networking model: host-authoritative. The utility-slot feature is inert on a client
+    /// until the HOST tells it the host has the mod (see <see cref="Networking.HostSync"/>).
+    /// A lone modded client in a vanilla lobby therefore gets no gameplay change — which is
+    /// what the Lethal Company community requires (no client-side advantage). The host still
+    /// controls everything through its own config.
     /// </summary>
     [BepInPlugin(PLUGIN_GUID, PLUGIN_NAME, PLUGIN_VERSION)]
     public class Plugin : BaseUnityPlugin
     {
-        public const string PLUGIN_GUID = "Iron.ImprovedTABSlot_Beltbag";
-        public const string PLUGIN_NAME = "ImprovedTABSlot+Beltbag";
-        public const string PLUGIN_VERSION = "1.3.0";
+        public const string PLUGIN_GUID = "Iron.ImprovedTABSlot";
+        public const string PLUGIN_NAME = "ImprovedTABSlot";
+        public const string PLUGIN_VERSION = "2.0.0";
 
         internal static Plugin Instance { get; private set; }
         internal static ManualLogSource Log { get; private set; }
@@ -47,38 +51,26 @@ namespace ImprovedTabSlot
         }
 
         /// <summary>
-        /// Confirms each patch actually attached, so a silent no-op (e.g. after a game update
-        /// renames a method) shows up clearly in the log.
+        /// Confirms the utility-slot Prefix attached, so a silent no-op (e.g. after a game
+        /// update renames the method) shows up clearly in the log.
         /// </summary>
         private void VerifyPatched()
         {
-            VerifyOne("utility-slot",
-                AccessTools.Method(typeof(PlayerControllerB), "FirstEmptyItemSlot", new[] { typeof(GrabbableObject) }),
-                "PlayerControllerB.FirstEmptyItemSlot(GrabbableObject)");
+            var target = AccessTools.Method(
+                typeof(PlayerControllerB), "FirstEmptyItemSlot", new[] { typeof(GrabbableObject) });
 
-            VerifyOne("belt-bag",
-                AccessTools.Method(typeof(BeltBagItem), "ItemInteractLeftRight", new[] { typeof(bool) }),
-                "BeltBagItem.ItemInteractLeftRight(bool)");
-        }
-
-        private void VerifyOne(string label, System.Reflection.MethodBase target, string desc)
-        {
             if (target == null)
             {
-                Log.LogError($"{desc} was not found. The game version may have changed it; " +
-                             $"the {label} patch is INACTIVE.");
+                Log.LogError("PlayerControllerB.FirstEmptyItemSlot(GrabbableObject) was not found. " +
+                             "The game version may have changed it; the utility-slot patch is INACTIVE.");
                 return;
             }
 
             var info = Harmony.GetPatchInfo(target);
-            bool attached =
-                (info?.Prefixes != null && info.Prefixes.Any(p => p.owner == PLUGIN_GUID)) ||
-                (info?.Postfixes != null && info.Postfixes.Any(p => p.owner == PLUGIN_GUID));
-
-            if (attached)
-                Log.LogInfo($"{char.ToUpper(label[0]) + label.Substring(1)} patch active on {desc}.");
-            else
-                Log.LogWarning($"{label} patch did not attach — mod is loaded but that feature is inactive.");
+            bool attached = info?.Prefixes != null && info.Prefixes.Any(p => p.owner == PLUGIN_GUID);
+            Log.LogInfo(attached
+                ? "Utility-slot patch active on PlayerControllerB.FirstEmptyItemSlot."
+                : "WARNING: utility-slot Prefix did not attach — mod is loaded but inactive.");
         }
     }
 }

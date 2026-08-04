@@ -1,8 +1,8 @@
 {
-  "name": "ImprovedTABSlot_Beltbag",
-  "version_number": "1.3.0",
-  "website_url": "https://github.com/Solo00n/ImprovedTABSlot-Beltbag",
-  "description": "Lets Shovel, Ammo, Clipboard, Sticky note, Key, Shotgun & Knife into the v80 utility (Tab) slot, and fixes the Belt Bag to store them too. Per-item config.",
+  "name": "ImprovedTABSlot",
+  "version_number": "2.0.0",
+  "website_url": "https://github.com/Solo00n/ImprovedTABSlot",
+  "description": "Lets Shovel, Ammo, Clipboard, Sticky note, Key, Shotgun & Knife into the v80 utility (Tab) slot. Host-authoritative, per-item config.",
   "dependencies": [
     "BepInEx-BepInExPack-5.4.2100"
   ]

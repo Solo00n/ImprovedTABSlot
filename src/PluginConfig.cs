@@ -4,7 +4,11 @@ namespace ImprovedTabSlot
 {
     /// <summary>
     /// All BepInEx config bindings. Written to
-    /// BepInEx/config/Iron.ImprovedTABSlot_Beltbag.cfg on first launch.
+    /// BepInEx/config/Iron.ImprovedTABSlot.cfg on first launch.
+    ///
+    /// These settings are the HOST's rules. In multiplayer the feature only activates when
+    /// the host has the mod; each client's own toggles decide what THEY may place, but the
+    /// host stays authoritative over the shared game state.
     /// </summary>
     public class PluginConfig
     {
@@ -18,8 +22,6 @@ namespace ImprovedTabSlot
         public readonly ConfigEntry<bool> AllowShotgun;
         public readonly ConfigEntry<bool> AllowKnife;
         public readonly ConfigEntry<bool> AllowManeater;
-
-        public readonly ConfigEntry<bool> BeltBagEnabled;
 
         public readonly ConfigEntry<bool> VerboseLogging;
 
@@ -53,22 +55,13 @@ namespace ImprovedTabSlot
                 "Allow the Kitchen knife into the utility slot.");
             AllowManeater = file.Bind(
                 "Items", "Maneater", false,
-                "Allow the Maneater (baby cave dweller) into the UTILITY (Tab) SLOT. It is intentionally NOT " +
-                "allowed in the belt bag: the bag never runs the creature's grab/equip path, so a bagged Maneater " +
-                "would keep running its (hidden) body and desync. The utility slot uses the real grab path and " +
-                "freezes it correctly. WARNING: still off by design — it's a balance cheese. Set true only if you " +
-                "want it.");
-
-            BeltBagEnabled = file.Bind(
-                "BeltBag", "Enabled", true,
-                "Also let normally-blocked items be stored in the Belt Bag. Vanilla's belt bag rejects all " +
-                "scrap items (so the Shotgun and Kitchen knife — both scrap — cannot go in). With this on, any " +
-                "scrap item enabled in the [Items] section above can be added to the belt bag too. (The Maneater " +
-                "is never added to the belt bag — see the [Items] Maneater note.)");
+                "Allow the Maneater (baby cave dweller) into the utility (Tab) slot. The utility slot uses the " +
+                "real grab path (EquipItem) which freezes the creature correctly. WARNING: off by design — it's a " +
+                "balance cheese. Set true only if you specifically want it.");
 
             VerboseLogging = file.Bind(
                 "Debug", "VerboseLogging", false,
-                "Log each time an item is routed to the utility slot or added to the belt bag by this mod.");
+                "Log each time an item is routed to the utility slot, and networking state changes.");
         }
     }
 }

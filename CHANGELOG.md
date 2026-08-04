@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.0
+- **Split**: this mod is now the utility (Tab) slot ONLY. The belt-bag feature moved to a
+  separate mod, **ImprovedBeltBag**. Renamed back to `ImprovedTABSlot` / `Iron.ImprovedTABSlot`
+  (config file is now `Iron.ImprovedTABSlot.cfg`).
+- **Networking**: added host-authoritative gating so the mod gives no client-side advantage
+  in a vanilla lobby — the utility-slot change only applies when the host has the mod.
+
 ## 1.3.0
 - Renamed to **ImprovedTABSlot+Beltbag** (Thunderstore package `ImprovedTABSlot_Beltbag`,
   assembly/plugin `Iron.ImprovedTABSlot_Beltbag`) to reflect that it covers both the utility
