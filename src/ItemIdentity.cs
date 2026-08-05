@@ -68,8 +68,8 @@ namespace ImprovedTabSlot
             // Maneater (baby cave dweller) — matched by itemId, opt-in.
             if (c.AllowManeater.Value && IsManeater(o)) return true;
 
-            // Kiwi egg ("Easter egg", laid by the Giant Kiwi) — KiwiBabyItem, opt-in.
-            if (c.AllowEasterEgg.Value && (HasClass(o, "KiwiBabyItem") || n.Contains("egg"))) return true;
+            // Easter egg (the "EasterEgg" collectible) — matched by name (works for modded ones too), opt-in.
+            if (c.AllowEasterEgg.Value && n.Replace(" ", "") == "easteregg") return true;
 
             return false;
         }

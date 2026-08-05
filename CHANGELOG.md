@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.1.1
+- Fix: the EasterEgg toggle now matches the actual "EasterEgg" collectible by name (was mistakenly matching the Kiwi egg).
+
 ## 2.1.0
 - Added an `[Items] EasterEgg` toggle (off by default) to allow the Kiwi egg (the "Easter
   egg" laid by the Giant Kiwi) into the utility slot.

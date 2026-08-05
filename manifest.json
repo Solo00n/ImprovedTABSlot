@@ -1,6 +1,6 @@
 {
   "name": "ImprovedTABSlot",
-  "version_number": "2.1.0",
+  "version_number": "2.1.1",
   "website_url": "https://github.com/Solo00n/ImprovedTABSlot",
   "description": "Lets Shovel, Ammo, Clipboard, Sticky note, Key, Shotgun & Knife into the v80 utility (Tab) slot. Host-authoritative, per-item config.",
   "dependencies": [

@@ -61,8 +61,7 @@ namespace ImprovedTabSlot
                 "balance cheese. Set true only if you specifically want it.");
             AllowEasterEgg = file.Bind(
                 "Items", "EasterEgg", false,
-                "Allow the Kiwi egg (the \"Easter egg\" laid by the Giant Kiwi) into the utility slot. It is a " +
-                "normal grabbable (no AI of its own), so it behaves like any other item here. Off by default.");
+                "Allow the Easter egg (the \"EasterEgg\" collectible) into the utility slot. Off by default.");
 
             VerboseLogging = file.Bind(
                 "Debug", "VerboseLogging", false,
