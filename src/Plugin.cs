@@ -21,7 +21,7 @@ namespace ImprovedTabSlot
     {
         public const string PLUGIN_GUID = "Iron.ImprovedTABSlot";
         public const string PLUGIN_NAME = "ImprovedTABSlot";
-        public const string PLUGIN_VERSION = "2.0.0";
+        public const string PLUGIN_VERSION = "2.1.0";
 
         internal static Plugin Instance { get; private set; }
         internal static ManualLogSource Log { get; private set; }

@@ -68,6 +68,9 @@ namespace ImprovedTabSlot
             // Maneater (baby cave dweller) — matched by itemId, opt-in.
             if (c.AllowManeater.Value && IsManeater(o)) return true;
 
+            // Kiwi egg ("Easter egg", laid by the Giant Kiwi) — KiwiBabyItem, opt-in.
+            if (c.AllowEasterEgg.Value && (HasClass(o, "KiwiBabyItem") || n.Contains("egg"))) return true;
+
             return false;
         }
 

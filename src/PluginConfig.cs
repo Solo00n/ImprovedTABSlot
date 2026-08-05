@@ -22,6 +22,7 @@ namespace ImprovedTabSlot
         public readonly ConfigEntry<bool> AllowShotgun;
         public readonly ConfigEntry<bool> AllowKnife;
         public readonly ConfigEntry<bool> AllowManeater;
+        public readonly ConfigEntry<bool> AllowEasterEgg;
 
         public readonly ConfigEntry<bool> VerboseLogging;
 
@@ -58,6 +59,10 @@ namespace ImprovedTabSlot
                 "Allow the Maneater (baby cave dweller) into the utility (Tab) slot. The utility slot uses the " +
                 "real grab path (EquipItem) which freezes the creature correctly. WARNING: off by design — it's a " +
                 "balance cheese. Set true only if you specifically want it.");
+            AllowEasterEgg = file.Bind(
+                "Items", "EasterEgg", false,
+                "Allow the Kiwi egg (the \"Easter egg\" laid by the Giant Kiwi) into the utility slot. It is a " +
+                "normal grabbable (no AI of its own), so it behaves like any other item here. Off by default.");
 
             VerboseLogging = file.Bind(
                 "Debug", "VerboseLogging", false,

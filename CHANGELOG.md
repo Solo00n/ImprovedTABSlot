@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.0
+- Added an `[Items] EasterEgg` toggle (off by default) to allow the Kiwi egg (the "Easter
+  egg" laid by the Giant Kiwi) into the utility slot.
+
 ## 2.0.0
 - **Split**: this mod is now the utility (Tab) slot ONLY. The belt-bag feature moved to a
   separate mod, **ImprovedBeltBag**. Renamed back to `ImprovedTABSlot` / `Iron.ImprovedTABSlot`
